@@ -3,5 +3,222 @@
     ViewBag.Title = "Patient";
 }
 
-<h2>Patient Page</h2>
 
+<style>
+    .border-box {
+        border: ridge;
+        padding: 15px;
+        margin: 2px;
+    }
+
+    .btn-round {
+        border-radius: 100px;
+        font-size: 80px;
+        width: 50%;
+    }
+
+    .div_table {
+        position: relative;
+        height: 400px;
+        overflow: auto;
+        display: block;
+    }
+
+
+    @@media only screen and (max-width: 768px) {
+
+        #flex {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #a {
+            order: 2;
+        }
+
+        #b {
+            order: 1;
+        }
+
+        #c {
+            order: 3;
+        }
+    }
+</style>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reserve Your Token</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/Patient/SaveToken" method="POST">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="patient-name" class="col-form-label">Patient Name :</label>
+                        <input type="text" name="patientName" class="form-control" id="patient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-text" class="col-form-label">Phone :</label>
+                        <input type="text" name="phone" class="form-control" id="phone-text">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h2>Patient</h2>
+
+<div class="row" id="flex">
+    <div class="col-xs-12 col-sm-4" id="a">
+        <div class="row border-box">
+            <h2 class="text-center">Pending</h2>
+            <div class="div_table">
+                <table id="tbl_pending" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Token #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-12 col-sm-4" id="b">
+        <div class="row border-box">
+            <h2 class="text-center">Token Running</h2>
+            <div class="text-center">
+                <span id="btnTokenRun" class="btn btn-info btn-round">0</span>
+            </div>
+            <hr />
+            <h2 class="text-center">Token Available</h2>
+            <div class="text-center">
+                <button type="button" id="btnTokenAvail" data-toggle="modal" data-target="#exampleModal" data-whatever="" class="btn btn-primary btn-round">0</button>
+            </div>
+            <div class="text-center" style="margin-top:20px;">
+                <button type="button" class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+    <!-- Optional: clear the XS cols if their content doesn't match in height -->
+    <div class="clearfix visible-xs-block"></div>
+    <div class="col-xs-12 col-sm-4" id="c">
+        <div class="row border-box">
+            <h2 class="text-center">Cancelled</h2>
+            <div class="div_table">
+                <table id="tbl_cancelled" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Token #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        getTokenData();
+
+        function getTokenData() {
+
+            $.ajax({
+                url: "/Patient/TokenDetail",
+                type: "Get",
+                data: [],
+                dataType: 'json',
+                success: function (result) {
+
+                    if (result.length > 0) {
+
+                        $("#btnTokenRun").text(result[0].Token_Running);
+                        $("#btnTokenAvail").text(result[0].Token_Available);
+
+                        $(result).each(function (i, val) {
+                            var html_pending = "";
+                            if (val.IsPending) {
+                                html_pending += "<tr>";
+                                html_pending += "<td>";
+                                html_pending += val.PatientName;
+                                html_pending += "</td>";
+                                html_pending += "<td>";
+                                html_pending += val.Phone;
+                                html_pending += "</td>";
+                                html_pending += "</tr>";
+                            }
+                            if (html_pending == "") {
+                                html_pending += "<tr><td class='text-center' colspan='2'><b>No Data</b></td></tr>"
+                            }
+                            $("#tbl_pending > tbody").html(html_pending);
+
+
+
+                            var html_cancelled = "";
+                            if (val.IsCancel) {
+                                html_cancelled += "<tr>";
+                                html_cancelled += "<td>";
+                                html_cancelled += val.PatientName;
+                                html_cancelled += "</td>";
+                                html_cancelled += "<td>";
+                                html_cancelled += val.Phone;
+                                html_cancelled += "</td>";
+                                html_cancelled += "</tr>";
+                            }
+                            if (html_cancelled == "") {
+                                html_cancelled += "<tr><td class='text-center' colspan='2'><b>No Data</b></td></tr>"
+                            }
+                            $("#tbl_cancelled > tbody").html(html_cancelled);
+
+                        });
+                    }
+                    else {
+                        $("#btnToken").text("0");
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            //var modal = $(this)
+            //modal.find('.modal-title').text('New message to ' + recipient)
+            //modal.find('.modal-body input').val(recipient)
+
+
+        });
+
+    });
+
+
+
+</script>

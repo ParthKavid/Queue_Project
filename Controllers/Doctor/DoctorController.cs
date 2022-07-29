@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Queue_Project.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,8 @@ namespace Queue_Project.Controllers.Doctor
 
         public ActionResult Doctor()
         {
-
+            Patient_DAL pdal = new Patient_DAL();
+            pdal.GetPatientsDetail();
             return View();
         }
     }
