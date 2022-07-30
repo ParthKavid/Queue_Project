@@ -35,8 +35,41 @@ namespace Queue_Project.Controllers.Patient
         public ActionResult SaveToken(string patientName, string phone)
         {
             var id = new Token_DAL().SaveTokenData(patientName, phone);
+                      
 
             return RedirectToAction("Patient");
         }
+
+        [HttpPost]
+        public ActionResult CancelToken(string phone)
+        {
+            var id = new Token_DAL().CancelTokenData(phone);
+
+            return RedirectToAction("Patient");
+        }
+
+        
+        public ActionResult CheckToken(string phone)
+        {
+            HttpCookie reqCookies = Request.Cookies["phoneData"];
+            
+            if (phone == "" && reqCookies != null)
+            {
+                phone = reqCookies["PhoneCookie"].ToString();
+                
+            }
+
+            var tokennum = new Token_DAL().CheckTokenData(phone);
+            
+            HttpCookie tokenData = new HttpCookie("phoneData");
+
+            tokenData["PhoneCookie"] = phone;
+            tokenData.Expires.AddHours(12);
+            Response.Cookies.Add(tokenData);
+
+            return Json(tokennum,JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

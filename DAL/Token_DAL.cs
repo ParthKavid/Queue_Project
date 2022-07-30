@@ -63,5 +63,65 @@ namespace Queue_Project.DAL
             }
 
         }
+
+        
+        public int CancelTokenData(string phone)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "CancelTokenData",
+                    Phone = phone
+                };
+
+                connection();
+                var id = con.Execute("Proc_Token", param, commandType: CommandType.StoredProcedure);
+
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        
+        public string CheckTokenData(string phone)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "CheckTokenData",
+                    Phone = phone
+                };
+
+                connection();
+                var data = con.Query<string>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                if (data == null)
+                {
+                    data = "";
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
     }
 }
