@@ -21,5 +21,29 @@ namespace Queue_Project.Controllers.Doctor
             pdal.GetPatientsDetail();
             return View();
         }
+
+        public ActionResult GetNextPatient(int TokenId)
+        {
+            Token_DAL tokenObj = new Token_DAL();
+            int id = tokenObj.GetNextPatient(TokenId);
+
+            return Json(id,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult NotAttend(int TokenId)
+        {
+            Token_DAL tokenObj = new Token_DAL();
+            int id = tokenObj.NotAttend(TokenId);
+
+            return Json(id, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CancelPatient(int TokenId)
+        {
+            Token_DAL tokenObj = new Token_DAL();
+            int id = tokenObj.CancelPatient(TokenId);
+
+            return Json(id, JsonRequestBehavior.AllowGet);
+        }
     }
 }

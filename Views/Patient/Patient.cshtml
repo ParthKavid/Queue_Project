@@ -136,7 +136,7 @@
 <h2>Patient :  <span id="dispName">-</span></h2>
 
 <div class="row" id="flex">
-    <div class="col-xs-12 col-sm-4" id="a">
+    @*<div class="col-xs-12 col-sm-4" id="a">
         <div class="row border-box">
             <h2 class="text-center">Not Attended</h2>
             <div class="div_table">
@@ -153,7 +153,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="clearfix visible-xs-block"></div>
     <div class="col-xs-12 col-sm-4" id="b">
         <div class="row border-box">
@@ -182,9 +182,9 @@
                 <table id="tbl_cancelled" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Patient</th>
+                            @*<th>Patient</th>*@
                             <th>Token #</th>
-                            <th>Phone</th>
+                            @*<th>Phone</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -211,12 +211,13 @@
                 success: function (result) {
 
                     if (result.length > 0) {
-
+                        var html_pending = "";
+                        var html_cancelled = "";
                         $("#btnTokenRun").text(result[0].Token_Running);
                         $("#btnTokenAvail").text(result[0].Token_Available);
 
                         $(result).each(function (i, val) {
-                            var html_pending = "";
+                           
                             if (val.IsPending) {
                                 html_pending += "<tr>";
                                 html_pending += "<td>";
@@ -230,34 +231,36 @@
                                 html_pending += "</td>";
                                 html_pending += "</tr>";
                             }
-                            if (html_pending == "") {
-                                html_pending += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
-                            }
-                            $("#tbl_pending > tbody").html(html_pending);
-
-
-
-                            var html_cancelled = "";
+                           
+                           
                             if (val.IsCancel && val.TokenNumber > val.Token_Running) {
                                 html_cancelled += "<tr>";
-                                html_cancelled += "<td>";
-                                html_cancelled += val.PatientName;
-                                html_cancelled += "</td>";
+                                //html_cancelled += "<td>";
+                                //html_cancelled += val.PatientName;
+                                //html_cancelled += "</td>";
                                 html_cancelled += "<td>";
                                 html_cancelled += val.TokenNumber;
                                 html_cancelled += "</td>";
-                                html_cancelled += "<td>";
-                                html_cancelled += val.Phone;
-                                html_cancelled += "</td>";
+                                //html_cancelled += "<td>";
+                                //html_cancelled += val.Phone;
+                                //html_cancelled += "</td>";
                                 html_cancelled += "</tr>";
                             }
 
-                            if (html_cancelled == "") {
-                                html_cancelled += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
-                            }
-                            $("#tbl_cancelled > tbody").html(html_cancelled);
+                            
 
                         });
+
+                        if (html_pending == "") {
+                            html_pending += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
+                        }
+                        $("#tbl_pending > tbody").html(html_pending);
+
+                        if (html_cancelled == "") {
+                            html_cancelled += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
+                        }
+                        $("#tbl_cancelled > tbody").html(html_cancelled);
+
                     }
                     else {
                         $("#btnToken").text("0");
@@ -314,6 +317,8 @@
                 }
             });
         }
+
+       
 
     });
 
