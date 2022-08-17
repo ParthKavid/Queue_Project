@@ -216,5 +216,36 @@ namespace Queue_Project.DAL
             }
 
         }
+        public int MarkIsAttended(int TokenId)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "MarkIsAttended",
+                    TokenId = TokenId
+                };
+
+                connection();
+                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                if (data == null)
+                {
+                    data = 0;
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+        
     }
 }

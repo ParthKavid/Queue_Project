@@ -1,15 +1,57 @@
 ﻿
 @{
-    ViewBag.Title = "Doctor Page Page";
+    ViewBag.Title = "Doctor Page ";
 }
 
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 <style>
+    body {
+        background-image: url("/Images/doctor_bg.jpg") !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        margin-top: 3%;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #79bba7;
+    }
+
+    h2 {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #btnTokenRun {
+        display: initial;
+    }
+
+    .mainDiv {
+        background: #7bc0a991;
+        padding: 10px;
+        border-radius: 40px;
+    }
+
+    .navbar-inverse {
+        background-color: #2e4b42 !important;
+    }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: white;
+        }
+
+        .navbar-inverse .navbar-brand {
+            color: white;
+            font-size: 25px;
+        }
+
     .border-box {
         border: ridge;
         padding: 15px;
         margin: 2px;
+        border-radius: 20px;
     }
 
     .btn-round {
@@ -25,15 +67,38 @@
         display: block;
     }
 
-    .btn-margin-left {
+    /*.btn-margin-left {
         margin-left:50px;
-    }
+    }*/
 
     .btn-margin-right {
-        margin-right: 50px;
+        margin-right: 20px;
+    }
+
+    .timeDiv {
+        border-style: ridge;
+        padding: 20px;
+        display:inline-flex;
+    }
+
+    .stime, .etime {
+        margin: 5px;
+    }
+
+    #btnTimeSave {
+        margin-left:10px;
     }
 
     @@media only screen and (max-width: 768px) {
+        body {
+            padding: 3%;
+            padding-top: 20%;
+        }
+
+        .mainDiv {
+            background: #7bc0a9d1;
+        }
+
         #flex {
             display: flex;
             flex-direction: column;
@@ -50,6 +115,8 @@
         #c {
             order: 3;
         }
+
+        
     }
 </style>
 
@@ -138,84 +205,148 @@
     </div>
 </div>
 
+<div class="mainDiv">
+    <div class="">
+        <h2>Doctor</h2>
+        <div class="timeDiv">
+            <input type="hidden" id="DoctorId" value="" />
+            <div class="stime">Start Time : <input type="time" id="startTime" /></div>  
+            <div class="etime">End Time : <input type="time" id="endTime" /></div>
+            <button class="btn btn-primary" id="btnTimeSave">Save</button>
+        </div>
+        <div class="text-right"><span class="refreshtimer"></span></div>
+    </div>
 
-
-<h2>Doctor</h2>
-
-<div class="row" id="flex">
-    <div class="col-xs-12 col-sm-4" id="a">
-        <div class="row border-box">
-            <h2 class="text-center">Not Attended</h2>
-            <div class="div_table">
-                <table id="tbl_pending" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Patient</th>
-                            <th>Token #</th>
-                            <th>Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+    <div class="row" id="flex">
+        <div class="col-xs-12 col-sm-4" id="a">
+            <div class="row border-box">
+                <h2 class="text-center">Not Attended</h2>
+                <div class="div_table">
+                    <table id="tbl_pending" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Token #</th>
+                                <th>Phone</th>
+                                <th>Is Attended</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot><tr><td colspan="4"><b>Total Not Attended : <span class="total_notAttended">0</span></b></td></tr></tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="clearfix visible-xs-block"></div>
-    <div class="col-xs-12 col-sm-4" id="b">
-        <div class="row border-box">
-            <h2 class="text-center">Token Running</h2>
-            <div class="text-center">
-                <span id="btnTokenRun" class="btn btn-info btn-round">0</span>
-                <b><span id="Total_Remaining" style="font-size:20px; display:block;margin:20px;">0</span></b>
-                <input type="hidden" id="tokenId" value="0" />
-            </div>
-            <div class="text-center">
-                <button type="button" class="btn btn-primary" id="btnNext" style="font-size:20px;margin-top:20px;">Next</button>
-            </div>
-            
-            <hr />
-            @*<h2 class="text-center">Token Available</h2>
-        <div class="text-center">
-            <button type="button" id="btnTokenAvail" data-toggle="modal" data-target="#exampleModal" data-whatever="" class="btn btn-primary btn-round">0</button>
-        </div>*@
-            <div class="text-center" style="margin-top:20px;">
-                <button type="button" id="btnNotAttended" class="btn btn-warning btn-margin-right">Not Attended</button>
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-xs-12 col-sm-4" id="b">
+            <div class="row border-box">
+                <h2 class="text-center">Token Running</h2>
+                <div class="text-center">
+                    <span id="btnTokenRun" class="btn btn-info btn-round">0</span>
+                    <b><span id="Total_Remaining" style="font-size:20px; display:block;margin:20px;">No Patients</span></b>
+                    <input type="hidden" id="tokenId" value="0" />
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" id="btnNext" style="font-size:20px;margin-top:20px;">Next</button>
+                </div>
 
-                <button type="button" class="btn btn-danger btn-margin-left" id="btnCancelPatient" >Cancel</button>
+                <hr />
+                @*<h2 class="text-center">Token Available</h2>
+                    <div class="text-center">
+                        <button type="button" id="btnTokenAvail" data-toggle="modal" data-target="#exampleModal" data-whatever="" class="btn btn-primary btn-round">0</button>
+                    </div>*@
+                <div class="text-center" style="margin-top:20px;">
+                    <button type="button" id="btnNotAttended" class="btn btn-warning btn-margin-right">Not Attended</button>
+
+                    <button type="button" class="btn btn-danger btn-margin-left" id="btnCancelPatient">Cancel</button>
+                </div>
+                <hr />
+                <div class="text-center" style="margin-top:20px;">
+                    <p><b>Total Patients Visited Today : <span class="totalAttended">0</span></b></p>
+                </div>
+
             </div>
+
         </div>
-
-    </div>
-    <!-- Optional: clear the XS cols if their content doesn't match in height -->
-    <div class="clearfix visible-xs-block"></div>
-    <div class="col-xs-12 col-sm-4" id="c">
-        <div class="row border-box">
-            <h2 class="text-center">Cancelled</h2>
-            <div class="div_table">
-                <table id="tbl_cancelled" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Patient</th>
-                            <th>Token #</th>
-                            <th>Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+        <!-- Optional: clear the XS cols if their content doesn't match in height -->
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-xs-12 col-sm-4" id="c">
+            <div class="row border-box">
+                <h2 class="text-center">Cancelled</h2>
+                <div class="div_table">
+                    <table id="tbl_cancelled" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Token #</th>
+                                <th>Phone</th>
+                                <th>Is Attended</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot><tr><td colspan="4"><b>Total Cancelled : <span class="total_cancelled">0</span></b></td></tr></tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
 
     $(document).ready(function () {
         checkOnRefresh();
         getTokenData();
+        setInterval(function () { getTokenData(); console.log("1") }, 60000)
+        var counter = 60;
+
+        setInterval(function () {
+            counter = counter - 1;
+            $(".refreshtimer").text("Update in " + counter + " seconds");
+            if (counter == 0) {
+                counter = 60;
+            }
+
+        }, 1000);
+
+
+        $(document).on("click", ".isAttended", function () {
+            var token_id = $(this).attr("data-value");
+
+            $.ajax({
+                url: "/Doctor/MarkIsAttended?TokenId=" + token_id,
+                type: "Get",
+                data: [],
+                dataType: 'json',
+                success: function (result) {
+                    //if (result > 0) {
+                    getTokenData();
+                    //}
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
 
         function getTokenData() {
+
+            $.ajax({
+                url: '/Doctor/GetDoctorData',
+                type: 'GET',
+                data: {DoctorId : $("#DoctorId").val()},
+                dataType: 'json',
+                success: function (result) {
+                   
+                    $("#startTime").val(result[0].StartTime);
+                    $("#endTime").val(result[0].EndTime);
+                },
+                error: function () {
+
+                }
+            });
 
             $.ajax({
                 url: "/Patient/TokenDetail",
@@ -228,6 +359,10 @@
 
                         $("#btnTokenRun").text(result[0].Token_Running);
                         $("#btnTokenAvail").text(result[0].Token_Available);
+                        $(".totalAttended").text(result[0].Total_Attended);
+                        $(".total_notAttended").text(result[0].Total_NotAttended);
+                        $(".total_cancelled").text(result[0].Total_Cancelled);
+
 
                         if (result[0].Total_Remaining == 0) {
                             $("#Total_Remaining").css("color", "red");
@@ -235,8 +370,8 @@
                         else {
                             $("#Total_Remaining").css("color", "darkblue");
                         }
-                        $("#Total_Remaining").text(result[0].Total_Remaining +" Patient waiting");
-                        
+                        $("#Total_Remaining").text(result[0].Total_Remaining + " Patients waiting");
+
 
                         var html_pending = "";
                         var html_cancelled = "";
@@ -245,7 +380,7 @@
                             if (val.IsCurrent) {
                                 $("#tokenId").val(val.TokenId);
                             }
-                           
+
                             if (val.IsPending) {
                                 html_pending += "<tr>";
                                 html_pending += "<td>";
@@ -257,11 +392,14 @@
                                 html_pending += "<td>";
                                 html_pending += val.Phone;
                                 html_pending += "</td>";
+                                html_pending += "<td>";
+                                html_pending += "<button class ='btn btn-primary isAttended' data-value='" + val.TokenId + "'>Attended</button>";
+                                html_pending += "</td>";
                                 html_pending += "</tr>";
                             }
 
-                            
-                            if (val.IsCancel)// && val.TokenNumber > val.Token_Running) 
+
+                            if (val.IsCancel)// && val.TokenNumber > val.Token_Running)
                             {
                                 html_cancelled += "<tr>";
                                 html_cancelled += "<td>";
@@ -273,6 +411,9 @@
                                 html_cancelled += "<td>";
                                 html_cancelled += val.Phone;
                                 html_cancelled += "</td>";
+                                html_cancelled += "<td>";
+                                html_cancelled += "<button class ='btn btn-primary isAttended' data-value='" + val.TokenId + "'>Attended</button>";
+                                html_cancelled += "</td>";
                                 html_cancelled += "</tr>";
                             }
 
@@ -280,18 +421,20 @@
 
 
                         if (html_pending == "") {
-                            html_pending += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
+                            html_pending += "<tr><td class='text-center' colspan='4'><b>No Data</b></td></tr>"
                         }
                         $("#tbl_pending > tbody").html(html_pending);
 
                         if (html_cancelled == "") {
-                            html_cancelled += "<tr><td class='text-center' colspan='3'><b>No Data</b></td></tr>"
+                            html_cancelled += "<tr><td class='text-center' colspan='4'><b>No Data</b></td></tr>"
                         }
                         $("#tbl_cancelled > tbody").html(html_cancelled);
 
                     }
                     else {
                         $("#btnToken").text("0");
+                        $("#tbl_pending > tbody").html("<tr><td class='text-center' colspan='4'><b>No Data</b></td></tr>");
+                        $("#tbl_cancelled > tbody").html("<tr><td class='text-center' colspan='4'><b>No Data</b></td></tr>");
                     }
 
                 },
@@ -302,17 +445,40 @@
         }
 
 
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            //var modal = $(this)
-            //modal.find('.modal-title').text('New message to ' + recipient)
-            //modal.find('.modal-body input').val(recipient)
+        $("#btnTimeSave").click(function () {
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
 
-
+            if (startTime == "" || endTime == "") {
+                toastr.error("Please Enter Start or End Time.");
+            }
+            else {
+                $.ajax({
+                    url: "/Doctor/SetClinicTime?StartTime=" + $("#startTime").val() + "&EndTime=" + $("#endTime").val(),
+                    type: "Get",
+                    data: { StartTime: startTime, EndTime: endTime},
+                    dataType: 'json',
+                    success: function (result) {
+                        toastr.success("Saved Successfully.");
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
         });
+
+        //$('#exampleModal').on('show.bs.modal', function (event) {
+        //    var button = $(event.relatedTarget) // Button that triggered the modal
+        //    var recipient = button.data('whatever') // Extract info from data-* attributes
+        //    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        //    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        //    //var modal = $(this)
+        //    //modal.find('.modal-title').text('New message to ' + recipient)
+        //    //modal.find('.modal-body input').val(recipient)
+
+
+        //});
 
         $("#btncheckToken").click(function () {
             $.ajax({
@@ -354,7 +520,7 @@
                 dataType: 'json',
                 success: function (result) {
                     //if (result > 0) {
-                        getTokenData();
+                    getTokenData();
                     //}
                 },
                 error: function (err) {

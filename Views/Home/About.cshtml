@@ -1,7 +1,115 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+
+
+<style>
+
+    body {
+        background-image: url("/Images/doctor_bg.jpg") !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        margin-top: 3%;
+    }
+    
+    .navbar-inverse {
+        background-color: #2e4b42 !important;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: white;
+        font-size: 25px;
+    }
+
+    .mainDiv {
+        background: #7bc0a991;
+        padding: 10px;
+        border-radius: 40px;
+        display:inline-block;
+    }
+    .img_main {
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .left {
+        float: left;
+        width: 50%;
+    }
+
+    .leftm {
+        float: left;
+        margin-right: -15%;
+    }
+
+    p {
+        font-size: 1.5em;
+    }
+
+    @@media only screen and (max-width: 768px) {
+        body {
+            padding: 3%;
+            padding-top: 20%;
+        }
+
+        .mainDiv {
+            background: #7bc0a9d1;
+        }
+
+        .left {
+            float: none;
+            width: 100%;
+        }
+
+        .leftm {
+            float: none;
+            margin-right: 100%;
+        }
+    }
+
+</style>
+
+<div class="mainDiv">
+    <img src="~/Images/about.jpg" class="img_main" alt="about">
+    <h1>About Us</h1>
+    <div class="left">
+        <p>
+            Soham Private Hospital, a private health care hospital is located in the eastern part of
+            Kitchener. The hospital facility is conveniently located along the Fairview Mall with easy access
+            to all major routes for transportation. We are located within close proximity of the Waterloo
+            International Airport and away from the hustle and bustle of hectic city locations.
+        </p>
+        <p>
+            In November 2021, the hospital was borne from the growing need of the public to access quality
+            health care at an affordable price. Over our 17 years of existence, we have embarked on numerous
+            development projects to provide patients a full service health care option.
+        </p>
+        <div class="leftm">
+            <img src="~/Images/a3.jpg" alt="india" width="60%">
+        </div>
+        <p>
+            Presently, we offer a comprehensive range of services whilst delivering a first class quality of
+            service. To cater to the growing medical needs of the public, we are a 24 hour institution offering
+            full round the clock Accident & Emergency Service, Ambulance Service, Medical Laboratory and Radiology
+            & Ultrasound Services. Our state of the art operating theatres equips us with the tools to provide
+            all major and minor surgical procedures and Laparoscopic procedures. Our service offering also
+            includes a High Dependency Unit, a Non-Invasive Cardiology Unit, Haemodialysis Centre, and full
+            Maternity Services.
+        </p>
+        <p>
+            Soham Private Hospital prides itself on an unparallel level of service to its patients and its community.
+            We remain committed to raising the bar in the areas of health and healthcare in Kitchener and Waterloo.
+        </p>
+    </div>
+    <div class="right">
+        <img src="~/Images/a1.jpg" alt="india" width="50%" style="margin-bottom: 3%;">
+        <img src="~/Images/a2.jpg" alt="india" width="50%">
+    </div>
+
+
+</div>

@@ -33,6 +33,12 @@ namespace Queue_Project.Models
 
         public int Token_Running { get; set; }
 
+        public int Total_Attended { get; set; }
+
+        public int Total_Cancelled { get; set; }
+
+        public int Total_NotAttended { get; set; }
+
         public List<Token_Model> AllData { get; set; }
 
 

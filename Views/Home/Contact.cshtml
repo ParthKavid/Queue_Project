@@ -1,17 +1,208 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<style>
+
+    body {
+        background-image: url("/Images/doctor_bg.jpg") !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        margin-top: 3%;
+    }
+
+    .navbar-inverse {
+        background-color: #2e4b42 !important;
+    }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: white;
+        }
+
+        .navbar-inverse .navbar-brand {
+            color: white;
+            font-size: 25px;
+        }
+
+    .mainDiv {
+        background: #7bc0a991;
+        padding: 10px;
+        border-radius: 40px;
+        display: inline-block;
+    }
+
+
+   /* .contact {
+        padding: 4%;
+        height: 400px;
+    }*/
+
+    .col-md-3 {
+        background: #2e4b42;
+        padding: 4%;
+        color: white;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+    }
+
+    .contact-info {
+        margin-top: 10%;
+    }
+
+        /*.contact-info img {
+            margin-bottom: 15%;
+        }
+*/
+        .contact-info h2 {
+            margin-bottom: 10%;
+        }
+
+    .col-md-9 {
+        background: #fff;
+        padding: 3%;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+    }
+
+    .contact-form label {
+        font-weight: 600;
+    }
+
+    .contact-form button {
+        background: #2e4b42;
+        color: #fff;
+        font-weight: 600;
+        width: 25%;
+    }
+
+    .contact-form {
+        display: grid;
+    }
+
+        .contact-form button:focus {
+            box-shadow: none;
+        }
+
+
+    .flex {
+        display: flex;
+    }
+
+
+    @@media only screen and (max-width: 768px) {
+        body {
+            padding: 3%;
+            padding-top: 20%;
+        }
+
+        .mainDiv {
+            background: #7bc0a9d1;
+        }
+
+        .flex {
+        flex-direction:column;
+        }
+
+        .col-md-9 {
+        padding-top:20px;
+        }
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        $(".btnContactForm").click(function () {
+
+            if ($("#fname").val() != "" || $("#lname").val() != "" || $("#email").val() != "" || $("#comment").val() != "") {
+                toastr.success('Your message is sent to our team!!', {
+                    toastClass: 'toast',
+                    positionClass: 'toast-top-center',
+                });
+
+                $(".form-control").val("");
+
+            }
+            else {
+                toastr.error('Please enter all data', {
+                    toastClass: 'toast',
+                    positionClass: 'toast-top-center',
+                });
+            }
+
+            
+        });
+        
+    });
+</script>
+<div class="">
+
+    <div class="container contact">
+        <div class="row flex">
+            <div class="col-md-3">
+                <div class="contact-info">
+                    <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image" />
+                    <h2>Contact Us</h2>
+                    <h4>We would love to hear from you !</h4>
+                    <hr />
+                    <address>
+                        <b>Address : </b>121 Victoria St S<br />
+                        &emsp;&emsp;&emsp;&emsp;&emsp; Kitchener ON, <br />
+                        &emsp;&emsp;&emsp;&emsp;&emsp; N2M 5N4<br />
+                        <br />
+                        <b>Phone :</b> 515-454-6545
+                    </address>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="contact-form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="fname">First Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="lname">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Email:</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="comment">Comment:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-default btnContactForm">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Section: Contact v.2-->
+    @*<h2>Contact</h2>
+        <address>
+            160 Andrew St<br />
+            Kitchener, ON N2H 5R2<br />
+            Phone : 515-456-2123
+        </address>
+
+        <address>
+            <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+            <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+        </address>*@
+</div>
