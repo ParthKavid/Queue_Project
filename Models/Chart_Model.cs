@@ -13,5 +13,7 @@ namespace Queue_Project.Models
         public int CountVal { get; set; }
 
         public int MonthVal { get; set; }
+
+        public string  DateVal { get; set; }
     }
 }

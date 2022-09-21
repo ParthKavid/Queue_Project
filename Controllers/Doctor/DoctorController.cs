@@ -17,59 +17,43 @@ namespace Queue_Project.Controllers.Doctor
 
         public ActionResult Doctor()
         {
-            //Patient_DAL pdal = new Patient_DAL();
-            // pdal.GetPatientsDetail();
             return View();
         }
 
         public ActionResult GetNextPatient(int TokenId)
         {
-            Token_DAL tokenObj = new Token_DAL();
-            int id = tokenObj.GetNextPatient(TokenId);
-
+            int id = ClsObject_Creation.Patient_obj.GetNextPatient(TokenId);
             return Json(id, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult NotAttend(int TokenId)
         {
-            Token_DAL tokenObj = new Token_DAL();
-            int id = tokenObj.NotAttend(TokenId);
-
+            int id = ClsObject_Creation.Patient_obj.NotAttend(TokenId);
             return Json(id, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CancelPatient(int TokenId)
         {
-            Token_DAL tokenObj = new Token_DAL();
-            int id = tokenObj.CancelPatient(TokenId);
-
+            int id = ClsObject_Creation.Patient_obj.CancelPatient(TokenId);
             return Json(id, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult MarkIsAttended(int TokenId)
         {
-
-            Token_DAL tokenObj = new Token_DAL();
-            int id = tokenObj.MarkIsAttended(TokenId);
-
+            int id = ClsObject_Creation.Token_obj.MarkIsAttended(TokenId);
             return Json(id, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SetClinicTime(string StartTime, string EndTime)
         {
-            Doctor_DAL dd = new Doctor_DAL();
-            var id = dd.SetClinicTime(StartTime,EndTime);
+            var id = ClsObject_Creation.Doctor_obj.SetClinicTime(StartTime,EndTime);
             return Json(id,JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetDoctorData(int? DoctorId)
         {
-            Doctor_DAL dd = new Doctor_DAL();
-            var data = dd.GetDoctorData(DoctorId);
-            
+            var data = ClsObject_Creation.Doctor_obj.GetDoctorData(DoctorId);
             return Json(data,JsonRequestBehavior.AllowGet);
         }
-
-        
     }
 }

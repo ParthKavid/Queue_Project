@@ -10,29 +10,31 @@ namespace Queue_Project.DAL
 {
     public class Doctor_DAL : dbConnection
     {
+     
         public List<Doctor_Model> GetDoctorData(int? DoctorId)
         {
-            try
-            {
-                var param = new
+            
+                try
                 {
-                    Method = "GetDoctorData",
-                    DoctorId = DoctorId
-                };
+                    var param = new
+                    {
+                        Method = "GetDoctorData",
+                        DoctorId = DoctorId
+                    };
 
-                connection();
-                var DoctorData= con.Query<Doctor_Model>("Proc_Doctor", param, commandType: CommandType.StoredProcedure).ToList();
+                    connection();
+                    var DoctorData = con.Query<Doctor_Model>("Proc_Doctor", param, commandType: CommandType.StoredProcedure).ToList();
 
-                return DoctorData;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
+                    return DoctorData;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    con.Close();
+                }
 
         }
 

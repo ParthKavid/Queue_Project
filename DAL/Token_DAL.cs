@@ -64,7 +64,37 @@ namespace Queue_Project.DAL
 
         }
 
-        
+        public int MarkIsAttended(int TokenId)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "MarkIsAttended",
+                    TokenId = TokenId
+                };
+
+                connection();
+                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                if (data == null)
+                {
+                    data = 0;
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
         public int CancelTokenData(string phone)
         {
             try
@@ -123,129 +153,6 @@ namespace Queue_Project.DAL
             }
 
         }
-
-        public int GetNextPatient(int TokenId)
-        {
-            try
-            {
-                var param = new
-                {
-                    Method = "GetNextPatient",
-                    TokenId = TokenId
-                };
-
-                connection();
-                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-
-                if (data == null)
-                {
-                    data = 0;
-                }
-
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
-
-        }
-
-        public int NotAttend(int TokenId)
-        {
-            try
-            {
-                var param = new
-                {
-                    Method = "NotAttend",
-                    TokenId = TokenId
-                };
-
-                connection();
-                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-
-                if (data == null)
-                {
-                    data = 0;
-                }
-
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
-
-        }
-
-        public int CancelPatient(int TokenId)
-        {
-            try
-            {
-                var param = new
-                {
-                    Method = "CancelPatient",
-                    TokenId = TokenId
-                };
-
-                connection();
-                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-
-                if (data == null)
-                {
-                    data = 0;
-                }
-
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
-
-        }
-        public int MarkIsAttended(int TokenId)
-        {
-            try
-            {
-                var param = new
-                {
-                    Method = "MarkIsAttended",
-                    TokenId = TokenId
-                };
-
-                connection();
-                var data = con.Query<int>("Proc_Token", param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-
-                if (data == null)
-                {
-                    data = 0;
-                }
-
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                con.Close();
-            }
-
-        }
-        
+      
     }
 }

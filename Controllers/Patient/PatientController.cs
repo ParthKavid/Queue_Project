@@ -24,9 +24,7 @@ namespace Queue_Project.Controllers.Patient
 
         public ActionResult TokenDetail()
         {
-            Token_DAL tokenDAL = new Token_DAL();
-            var tokenData = tokenDAL.GetTokenDetail();
-
+            var tokenData = ClsObject_Creation.Token_obj.GetTokenDetail();
             return Json(tokenData, JsonRequestBehavior.AllowGet);
 
         }
@@ -34,8 +32,11 @@ namespace Queue_Project.Controllers.Patient
         [HttpPost]
         public ActionResult SaveToken(string patientName, string phone)
         {
-            var id = new Token_DAL().SaveTokenData(patientName, phone);
-                      
+
+            if (patientName != null && phone != null)
+            {
+                var id = ClsObject_Creation.Token_obj.SaveTokenData(patientName, phone);
+            }
 
             return RedirectToAction("Patient");
         }
@@ -43,7 +44,7 @@ namespace Queue_Project.Controllers.Patient
         [HttpPost]
         public ActionResult CancelToken(string phone)
         {
-            var id = new Token_DAL().CancelTokenData(phone);
+            var id = ClsObject_Creation.Token_obj.CancelTokenData(phone);
 
             return RedirectToAction("Patient");
         }
@@ -59,7 +60,7 @@ namespace Queue_Project.Controllers.Patient
                 
             }
 
-            var tokennum = new Token_DAL().CheckTokenData(phone);
+            var tokennum = ClsObject_Creation.Token_obj.CheckTokenData(phone);
             
             HttpCookie tokenData = new HttpCookie("phoneData");
 

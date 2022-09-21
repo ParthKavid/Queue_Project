@@ -1,0 +1,35 @@
+﻿body {
+    background-image: url("/Images/doctor_bg.jpg") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    margin-top: 3%;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #79bba7;
+}
+
+.navbar-inverse {
+    background-color: #2e4b42 !important;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: white;
+        font-size: 25px;
+    }
+
+.divPatientList {
+    margin-top: 30px;
+    overflow: auto;
+    height: 500px;
+}
+
+.mainDiv {
+    background: #7bc0a991;
+    padding: 10px;
+    border-radius: 40px;
+}

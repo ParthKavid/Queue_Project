@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Queue_Project.Models
 {
-    public class Patient_Model
+    public class Patient_Model : IPatient_Model
     {
         public int PatientId { get; set; }
         public string PatientName { get; set; }

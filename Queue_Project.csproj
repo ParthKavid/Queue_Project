@@ -127,8 +127,10 @@
     <Compile Include="Controllers\Doctor\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Patient\PatientController.cs" />
+    <Compile Include="DAL\ClsObject_Creation.cs" />
     <Compile Include="DAL\dbConnection.cs" />
     <Compile Include="DAL\Doctor_DAL.cs" />
+    <Compile Include="DAL\IdbConnection.cs" />
     <Compile Include="DAL\Patient_DAL.cs" />
     <Compile Include="DAL\Token_DAL.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,6 +138,9 @@
     </Compile>
     <Compile Include="Models\Chart_Model.cs" />
     <Compile Include="Models\Doctor_Model.cs" />
+    <Compile Include="Models\IPatient_Model.cs" />
+    <Compile Include="Models\IToken_Model.cs" />
+    <Compile Include="Models\IToken_Status.cs" />
     <Compile Include="Models\Patient_Model.cs" />
     <Compile Include="Models\Token_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,6 +150,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\MyCustomCSS\About.css" />
+    <Content Include="Content\MyCustomCSS\Chart.css" />
+    <Content Include="Content\MyCustomCSS\Contact.css" />
+    <Content Include="Content\MyCustomCSS\Doctor.css" />
+    <Content Include="Content\MyCustomCSS\Patient.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />

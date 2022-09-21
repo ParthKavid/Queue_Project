@@ -11,11 +11,11 @@ namespace Queue_Project.Models
 
         public string EndTime { get; set; }
 
-
         public string DoctorName { get; set; }
 
         public string Phone { get; set; }
         public string ClinicName { get; set; }
 
     }
+     
 }

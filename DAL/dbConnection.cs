@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Queue_Project.DAL
 {
-    public class dbConnection  
+    public class dbConnection : IdbConnection
     {
         public SqlConnection con;
         //To Handle connection related activities      
@@ -16,6 +16,13 @@ namespace Queue_Project.DAL
             string constr = ConfigurationManager.ConnectionStrings["myConnection"].ToString();
             con = new SqlConnection(constr);
             con.Open();
+        }
+
+        public SqlConnection Newconnection()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["myConnection"].ToString();
+            con = new SqlConnection(constr);
+            return con;
         }
     }
 }

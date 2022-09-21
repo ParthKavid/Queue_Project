@@ -18,7 +18,9 @@ namespace Queue_Project.Controllers
 
         public ActionResult Chart()
         {
-            return View();
+            Chart_Model model = new Chart_Model();
+            model.DateVal = DateTime.Now.ToString("yyyy-MM-dd");
+            return View(model);
         }
 
 
@@ -27,6 +29,12 @@ namespace Queue_Project.Controllers
             Doctor_DAL dd = new Doctor_DAL();
             var data = dd.GetCharData();
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetVisitedPatients(DateTime dateval)
+        {
+            var data = ClsObject_Creation.Patient_obj.GetVisitedPatients(dateval);
+            return Json(data,JsonRequestBehavior.AllowGet);
         }
     }
 }
