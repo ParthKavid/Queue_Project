@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Queue_Project.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -40,7 +41,7 @@ namespace Queue_Project.Models
 
         public List<IToken_Model> AllData { get; set; }
 
-
+        public List<ISubPatient_Model> SubPatientList { get; set; }
 
 
     }

@@ -35,6 +35,34 @@ namespace Queue_Project.DAL
 
         }
 
+        public List<Token_Model> GetNotAttendedCancelledAPI()
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "GetNotAttendedCancelledAPI"
+                };
+
+                connection();
+                var TokenList = con.Query<Token_Model>("Proc_Token", param, commandType: CommandType.StoredProcedure).ToList();
+
+                return TokenList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+
+
+
 
         public int SaveTokenData(string patientName, string phone)
         {
@@ -153,6 +181,35 @@ namespace Queue_Project.DAL
             }
 
         }
-      
+
+
+        // API CODE
+
+        public List<Token_Model> GetTokenRunningPartData(int DoctorID)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "GetTokenRunningPartData",
+                    DoctorID = DoctorID
+                };
+
+                connection();
+                var TokenList = con.Query<Token_Model>("Proc_Token", param, commandType: CommandType.StoredProcedure).ToList();
+
+                return TokenList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
     }
 }

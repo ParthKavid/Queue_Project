@@ -131,27 +131,146 @@ namespace Queue_Project.DAL
 
         }
 
-        //public List<Patient_Model> GetPatientsDetail()
-        //{
-        //    try
-        //    {
-        //        var param = new {
-        //            Method = "GetPatientsDetail"
-        //        };
+        public List<Token_Model> DashBoardPatientData(int PatientId)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "DashBoardPatientAPI",
+                    PatientId = PatientId
+                };
 
-        //        connection();
-        //        var PatientList = con.Query<Patient_Model>("Proc_Patient", param, commandType: CommandType.StoredProcedure).ToList();
+                connection();
+                var data = con.Query<Token_Model>("Proc_TokenAPI", param, commandType: CommandType.StoredProcedure).ToList();
 
-        //        return PatientList;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally {
-        //        con.Close();
-        //    }
+                if (data == null)
+                {
+                    data = new List<Token_Model>();
+                }
 
-        //}
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        public List<Patient_Model> GetPatientsDetail(int PatientId)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "GetPatientsDetail",
+                    PatientId = PatientId
+                };
+
+                connection();
+                var PatientList = con.Query<Patient_Model>("Proc_Patient", param, commandType: CommandType.StoredProcedure).ToList();
+
+                return PatientList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+
+        public List<SubPatient_Model> SubPatientDetailAPI(int PatientId)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "GetSubPatientDetail",
+                    PatientId = PatientId
+                };
+
+                connection();
+                var SubPatientList = con.Query<SubPatient_Model>("Proc_Patient", param, commandType: CommandType.StoredProcedure).ToList();
+
+                return SubPatientList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+        public int SaveTokenAPI(SaveTokenModel model)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "SaveTokenAPI",
+                    NoOfPatient = model.NoOfPatient,
+                    PatientId = model.PatientId
+                };
+
+                connection();
+                var id = con.ExecuteScalar<int>("Proc_Patient", param, commandType: CommandType.StoredProcedure);
+
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
+
+        public int SaveSubPatientName(SubPatient_Model model)
+        {
+            try
+            {
+                var param = new
+                {
+                    Method = "SaveSubPatientName",
+                    FullName = model.FullName,
+                    SubPatientId = model.SubPatientId
+                };
+
+                connection();
+                var id = con.ExecuteScalar<int>("Proc_Patient", param, commandType: CommandType.StoredProcedure);
+
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
+
     }
 }

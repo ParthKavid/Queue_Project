@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Queue_Project.Data;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,10 +14,15 @@ namespace Queue_Project
     {
         protected void Application_Start()
         {
+
+            Database.SetInitializer<DbEntityContext>(null); // no need to initialize database.. I have database already. 
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
         }
     }
 }
