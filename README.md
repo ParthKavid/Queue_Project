@@ -7,6 +7,8 @@ This web application provides TOKEN Number.
 We can see which token number is currenlty running and which token is available at your home.
 No need to wait inside or outside of clinic anymore.
 
+Please ignore the design. My main focus is on backend code. I'll make it professional look later on.
+
 New features coming soon..
 
 Screenshots : ![1](https://user-images.githubusercontent.com/97716515/191570014-a5df2a16-cbeb-49fa-abfb-df380c567773.png)
